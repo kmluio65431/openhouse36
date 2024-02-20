@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>無職轉生！到異世界找工作吧！</title>
+<title>測驗結果</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<style>
+  body {
+    font-family: '辰宇落雁體', sans-serif;
+    background-image: url('background.jpg'); /* 更改為您想要的背景圖片 */
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+  .title {
+    color: #ffe791;
+    text-align: center;
+    padding: 20px;
+  }
+  #resultContainer {
+    background-color: rgba(255, 255, 255, 0.8); /* 使用半透明背景 */
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    text-align: center;
+  }
+  #resultImage {
+    margin-top: 20px;
+    max-width: 100%;
+    height: auto;
+  }
+  #shareButton {
+    margin-top: 20px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    background-color: #004080;
+    color: #ffffff;
+    font-size: 16px;
+    cursor: pointer;
+  }
+</style>
+</head>
+<body>
+
+<div id="resultContainer">
+  <!-- 隱藏的 Canvas 元素 -->
+  <canvas id="resultCanvas" style="display: none;"></canvas>
+
+  <div id="resultImage"></div>
+  <button id="shareButton">分享結果</button>
+</div>
+
+<script>
+$(document).ready(function() {
+  // 取得受試者選擇的答案
+  const answers = JSON.parse(localStorage.getItem('answers'));
+
+  // 解析答案對應的文字
+  const analysis = {
+    'question1': {
+      'a': '隨機應變能力強，適合多方接觸',
+      'b': '重視釐清，較為理性',
+      'c': '天馬行空，具備勇氣與順應能力'
+    },
+    'question2': {
+      'a': '較為積極，會尋找解決方法，直面挑戰',
+      'b': '較為自我保護，會迂迴解決挑戰',
+      'c': '個性跳tone，用詼諧的方式化險為夷'
+    },
+    'question3': {
+      'a': '理工科',
+      'b': '人文科',
+      'c': '醫療相關'
+    },
+    'question4': {
+      'a': '貓咪有高傲、獨立特性，適合單打獨鬥',
+      'b': '狗通常作為夥伴，適合在群體中合作',
+      'c': '獨角獸是幻想生物，有更多創造力'
+    }
+  };
+
+  // 取得測驗結果
+  const resultText = `
+    在面對陌生環境，您會：${analysis['question1'][answers['question1']]}<br>
+    在遇見挑戰時，您會：${analysis['question2'][answers['question2']]}<br>
+    您要用什麼能力來謀生呢！原來您是：${analysis['question3'][answers['question3']]}<br>
+    最後，路上太危險了，請帶上：${analysis['question4'][answers['question4']]}吧！
+  `;
+
+  // 將測驗結果繪製到 Canvas 上
+  const canvas = document.getElementById('resultCanvas');
+  const ctx = canvas.getContext('2d');
+  canvas.width = 400;
+  canvas.height = 200;
+
+  ctx.fillStyle = '#ffffff';
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+  ctx.font = '16px Arial';
+  ctx.fillStyle = '#000000';
+  ctx.fillText(resultText, 20, 40);
+
+  // 將 Canvas 轉換為圖片 URL
+  const imgURL = canvas.toDataURL();
+
+  // 將結果圖片顯示在畫面上
+  $('#resultImage').html(`<img src="${imgURL}" alt="測驗結果" id="resultImg">`);
+
+  // 點擊分享按鈕，下載結果圖片
+  $('#shareButton').click(function() {
+    const link = document.createElement('a');
+    link.href = imgURL;
+    link.download = '測驗結果.png';
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+  });
+});
+</script>
+
+</body>
+</html>

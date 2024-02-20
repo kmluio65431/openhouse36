@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>無職轉生！到異世界找工作吧！</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+<style>
+  body {
+    font-family: '辰宇落雁體', sans-serif;
+    background-color: #f0f0f0;
+    margin: 0;
+    padding: 0;
+  }
+  .title {
+    background-color: #004080;
+    color: #ffffff;
+    text-align: center;
+    padding: 20px;
+  }
+  .content {
+    background-color: #ffffff;
+    padding: 20px;
+    margin: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  }
+  button {
+    font-family: '辰宇落雁體', sans-serif;
+    display: block;
+    width: 100%;
+    padding: 10px;
+    margin-top: 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: #004080;
+    color: #ffffff;
+    font-size: 16px;
+    cursor: pointer;
+  }
+</style>
+</head>
+<body>
+<div class="title">
+  <h1>無職轉生！到異世界找工作吧！</h1>
+</div>
+<div class="content">
+  <h2>天啊，來人有很大的攻擊性，你要⋯⋯</h2>
+  <button class="question-button" data-next="question3.html">a. 先發制人，who怕who</button>
+  <button class="question-button" data-next="question3.html">b. 三十六計，走為上策</button>
+  <button class="question-button" data-next="question3.html">c. 跪下來求他放過自己</button>
+</div>
+
+<script>
+  $(document).ready(function() {
+    $('.question-button').click(function() {
+      const nextQuestion = $(this).data('next');
+      saveAnswer('question2', $(this).text()[0].toLowerCase());
+      window.location.href = nextQuestion;
+    });
+
+    function saveAnswer(question, choice) {
+      const answers = JSON.parse(localStorage.getItem('answers')) || {};
+      answers[question] = choice;
+      localStorage.setItem('answers', JSON.stringify(answers));
+    }
+  });
+</script>
+
+</body>
+</html>
